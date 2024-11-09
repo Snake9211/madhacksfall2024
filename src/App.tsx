@@ -1,6 +1,6 @@
 import './App.css'
 
-import Compare from './pages/Compare'
+import Compare from './pages/Resources'
 
 function App() {
 
