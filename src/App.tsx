@@ -1,5 +1,3 @@
-import './App.css'
-
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 
 import Compare from './pages/Resources'
