@@ -1,35 +1,25 @@
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import './App.css';
 
-import Compare from './pages/Resources'
-import Search from './pages/Search';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 
 // import Submission from './pages/Submission';
 // import Trends from './pages/Trends';
+import NavBar from './components/navBar';
+import Resources from './pages/Resources';
+import Search from './pages/Search';
 
-function NavigationBar() {
-  return (
-    <nav>
-      <a href="/">Search </a>
-      <a href="/submission">Submission </a>
-      <a href="/trends">Trends </a>
-      <a href="/resources">Resources </a>
-      
-    </nav>
-  );
-}
-
-function MainApp() {
+function App() {
   return (
     <Router>
-      <NavigationBar />
+      <NavBar /> 
       <Routes>
         <Route path="/" element={<Search />} />
         {/* <Route path="/submission" element={<Submission />} />
         <Route path="/trends" element={<Trends />} /> */}
-        <Route path="/resources" element={<Compare />} />
+        <Route path="/resources" element={<Resources />} />
       </Routes>
     </Router>
   );
 }
 
-export default MainApp;
+export default App;
