@@ -1,10 +1,10 @@
-import { collection, getDocs, query } from 'firebase/firestore';
-import  { useEffect, useState } from 'react';
+/*import { collection, getDocs, query } from 'firebase/firestore';
+import { useEffect, useState } from 'react';
 
-import { db } from "../firebaseConfig";
+import { db } from '../firebaseConfig';*/
 
-function Compare() {
-  const [scamMessages, setScamMessages] = useState<string[]>([]);
+function Resources() {
+  /*const [scamMessages, setScamMessages] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchMessages = async () => {
@@ -13,27 +13,23 @@ function Compare() {
         const q = query(messagesRef);
 
         const querySnapshot = await getDocs(q);
-        const messages = querySnapshot.docs.map(doc => doc.data().content); 
-        setScamMessages(messages); 
+        const messages = querySnapshot.docs.map((doc) => doc.data().content);
+        setScamMessages(messages);
       } catch (error) {
-        console.error('Error fetching messages: ', error); 
+        console.error('Error fetching messages: ', error);
       }
     };
 
     fetchMessages();
-  }, []);
+  }, []);*/
 
   return (
     <div>
-      <h1>Scam Message Checker</h1>
-      <h2>Submitted Scam Messages:</h2>
-      <ul>
-        {scamMessages.map((msg, index) => (
-          <h5 key={index}>{msg}</h5>
-        ))}
-      </ul>
+      <h1>
+        Identifying <span className="text-red-800">Spam</span> Messages
+      </h1>
     </div>
   );
 }
 
-export default Compare;
+export default Resources;
