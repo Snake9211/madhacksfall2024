@@ -1,15 +1,15 @@
 // SubmitReportForm.tsx
-import React, { useState } from "react";
-import { db } from '../firebaseConfig'; 
-import { collection, addDoc } from "firebase/firestore";
+import React, { useState } from 'react';
+import { db } from '../firebaseConfig';
+import { collection, addDoc } from 'firebase/firestore';
 
 const Submit: React.FC = () => {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [category, setCategory] = useState(""); 
-  const [communicationType, setCommunicationType] = useState(""); 
-  const [email, setEmail] = useState(""); 
-  const [phone, setPhoneNumber] = useState(""); 
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [category, setCategory] = useState('');
+  const [communicationType, setCommunicationType] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhoneNumber] = useState('');
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -19,37 +19,36 @@ const Submit: React.FC = () => {
       content,
       category,
       communicationType,
-      email, 
-      phone, 
+      email,
+      phone,
       reportID: generateUniqueFirestoreId(), // Simple unique ID
-      time: Date.now() / 1000 
+      time: Date.now() / 1000,
     };
 
     try {
-      await addDoc(collection(db, "Scam Report"), reportData);
-      alert("Report submitted!");
+      await addDoc(collection(db, 'Scam Report'), reportData);
+      alert('Report submitted!');
       setTitle(title);
       setContent(content);
       setCategory(category);
       setCommunicationType(communicationType);
-      setEmail(email); 
-      setPhoneNumber(phone); 
+      setEmail(email);
+      setPhoneNumber(phone);
 
       // Reset form fields
-      setTitle("");
-      setContent("");
-      setCategory("");
-      setCommunicationType(""); 
-      setEmail(""); 
-      setPhoneNumber(""); 
-      setCommunicationType("");
-
+      setTitle('');
+      setContent('');
+      setCategory('');
+      setCommunicationType('');
+      setEmail('');
+      setPhoneNumber('');
+      setCommunicationType('');
     } catch (error) {
-      console.error("Error adding document: ", error);
+      console.error('Error adding document: ', error);
     }
   };
 
-  function generateUniqueFirestoreId(){
+  function generateUniqueFirestoreId() {
     // Alphanumeric characters
     const chars =
       'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -57,14 +56,19 @@ const Submit: React.FC = () => {
     for (let i = 0; i < 20; i++) {
       autoId += chars.charAt(Math.floor(Math.random() * chars.length));
     }
-  
+
     return autoId;
   }
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-2xl font-bold text-center mb-6 text-red-900">Submit a New Report</h2>
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md"
+      >
+        <h2 className="text-2xl font-bold text-center mb-6 text-red-900">
+          Submit a New Report
+        </h2>
 
         <label className="block mb-4">
           <span className="text-lg font-semibold">Title:</span>
@@ -96,7 +100,9 @@ const Submit: React.FC = () => {
             onChange={(e) => setCategory(e.target.value)}
             className="mt-1 block w-full p-3 border border-gray-300 rounded-lg focus:border-red-500 focus:outline-none text-lg"
           >
-            <option selected hidden value="Other">Choose here</option>
+            <option selected hidden value="Other">
+              Choose here
+            </option>
             <option value="Phishing">Phishing</option>
             <option value="Job">Job</option>
             <option value="Housing">Housing</option>
@@ -112,31 +118,35 @@ const Submit: React.FC = () => {
             onChange={(e) => setCommunicationType(e.target.value)}
             className="mt-1 block w-full p-3 border border-gray-300 rounded-lg focus:border-red-500 focus:outline-none text-lg"
           >
-            <option selected hidden value="Other">Choose here</option>
+            <option selected hidden value="Other">
+              Choose here
+            </option>
             <option value="Email">Email</option>
             <option value="Phone">Phone Call / Text Message</option>
           </select>
         </label>
 
-
         <label className="block mb-4">
-            <span className="text-lg font-semibold">Scammer Contact: {communicationType}</span>
-            <input
-                value={communicationType === "Email" ? email : phone}
-                type={communicationType === "Email" ? "email" : "tel"}
-                pattern={communicationType === "Email" ? "" : "[0-9]{3}[0-9]{3}[0-9]{4}"}
-                onChange={(e) => {
-                if (communicationType === "Email") {
-                    setEmail(e.target.value);
-                } else if (communicationType === "Phone") {
-                    setPhoneNumber(e.target.value);
-                }
-                //setContent(e.target.value); // Updates content state regardless
-                }}
-                className="mt-1 block w-full p-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none text-lg"
-            />
+          <span className="text-lg font-semibold">
+            Scammer Contact: {communicationType}
+          </span>
+          <input
+            value={communicationType === 'Email' ? email : phone}
+            type={communicationType === 'Email' ? 'email' : 'tel'}
+            pattern={
+              communicationType === 'Email' ? '' : '[0-9]{3}[0-9]{3}[0-9]{4}'
+            }
+            onChange={(e) => {
+              if (communicationType === 'Email') {
+                setEmail(e.target.value);
+              } else if (communicationType === 'Phone') {
+                setPhoneNumber(e.target.value);
+              }
+              //setContent(e.target.value); // Updates content state regardless
+            }}
+            className="mt-1 block w-full p-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none text-lg"
+          />
         </label>
-
 
         <button
           type="submit"

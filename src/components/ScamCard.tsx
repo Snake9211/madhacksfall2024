@@ -8,6 +8,19 @@ import {
   CardHeader,
   CardTitle,
 } from '../components/ui/card';
+import PhishingIcon from '@mui/icons-material/Phishing';
+import WorkIcon from '@mui/icons-material/Work';
+import OtherHousesIcon from '@mui/icons-material/OtherHouses';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import LightbulbIcon from '@mui/icons-material/Lightbulb';
+
+const iconMap: Record<string, React.ReactNode> = {
+  Phishing: <PhishingIcon />,
+  'Identity Theft': <AccountBoxIcon />,
+  work: <WorkIcon />,
+  housing: <OtherHousesIcon />,
+  Other: <LightbulbIcon />,
+};
 
 interface ScamCardProps {
   scam: Scam; // Define the expected prop as a Scam object
@@ -15,9 +28,14 @@ interface ScamCardProps {
 
 const ScamCard: React.FC<ScamCardProps> = ({ scam }) => {
   return (
-    <Card className="w-[350px]">
+    <Card className="w-full h-5/6">
       <CardHeader>
-        <CardTitle>{scam.title}</CardTitle>
+        <CardTitle className="flex justify-between">
+          <div>{scam.title}</div>
+          <div className="text-red-600 font-bold">
+            {iconMap[scam.category] || <PhishingIcon />}
+          </div>
+        </CardTitle>
         <CardDescription>
           {scam.communicationType}:{' '}
           {scam.communicationType === 'Email' ? scam.email : scam.phone}
