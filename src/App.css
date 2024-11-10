@@ -1,0 +1,15 @@
+.background-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    overflow: hidden;
+  }
+  
+  .content-container {
+    position: relative;
+    z-index: 1;
+    padding: 0px; 
+  }
