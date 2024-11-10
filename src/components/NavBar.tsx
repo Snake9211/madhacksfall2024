@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const navigation = [
   { name: 'Search', href: '/', current: true },
-  { name: 'Submission', href: '/submission', current: false },
+  { name: 'Submission', href: '/Submission', current: false },
   { name: 'Trends', href: '/trends', current: false },
   { name: 'Resources', href: '/resources', current: false },
 ];
