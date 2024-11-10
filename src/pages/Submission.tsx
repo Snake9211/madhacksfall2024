@@ -54,11 +54,12 @@ const Submit: React.FC = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-2xl font-bold text-center mb-6">Submit a New Report</h2>
+        <h2 className="text-2xl font-bold text-center mb-6 text-red-900">Submit a New Report</h2>
 
         <label className="block mb-4">
           <span className="text-lg font-semibold">Title:</span>
           <input
+            required
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
@@ -69,6 +70,7 @@ const Submit: React.FC = () => {
         <label className="block mb-4">
           <span className="text-lg font-semibold">Content:</span>
           <textarea
+            required
             value={content}
             onChange={(e) => setContent(e.target.value)}
             className="mt-1 block w-full p-3 border border-gray-300 rounded-lg focus:border-red-500 focus:outline-none text-lg"
@@ -79,10 +81,12 @@ const Submit: React.FC = () => {
         <label className="block mb-4">
           <span className="text-lg font-semibold">Category:</span>
           <select
+            required
             value={category}
             onChange={(e) => setCategory(e.target.value)}
             className="mt-1 block w-full p-3 border border-gray-300 rounded-lg focus:border-red-500 focus:outline-none text-lg"
           >
+            <option selected hidden value="Other">Choose here</option>
             <option value="Phishing">Phishing</option>
             <option value="Job">Job</option>
             <option value="Housing">Housing</option>
@@ -98,7 +102,7 @@ const Submit: React.FC = () => {
             onChange={(e) => setCommunicationType(e.target.value)}
             className="mt-1 block w-full p-3 border border-gray-300 rounded-lg focus:border-red-500 focus:outline-none text-lg"
           >
-            <option selected hidden >Choose here</option>
+            <option selected hidden value="Other">Choose here</option>
             <option value="Email">Email</option>
             <option value="Phone">Phone Call / Text Message</option>
           </select>
@@ -108,7 +112,7 @@ const Submit: React.FC = () => {
         <label className="block mb-4">
             <span className="text-lg font-semibold">Scammer Contact: {communicationType}</span>
             <input
-                value={content}
+                value={communicationType === "Email" ? email : phone}
                 onChange={(e) => {
                 if (communicationType === "Email") {
                     setEmail(e.target.value);
@@ -124,7 +128,7 @@ const Submit: React.FC = () => {
 
         <button
           type="submit"
-          className="w-full py-3 mt-6 bg-red-600 text-white font-semibold rounded-lg text-lg hover:bg-red-700 focus:outline-none focus:bg-blue-700"
+          className="w-full py-3 mt-6 bg-red-600 text-white font-semibold rounded-lg text-lg hover:bg-red-700 focus:outline-none focus:bg-red-700"
         >
           Submit Report
         </button>
