@@ -36,7 +36,7 @@ const Submit: React.FC = () => {
       setEmail("");
       setPhoneNumber("");
     } catch (error) {
-      console.error("Error adding document: ", error);
+      console.error('Error adding document: ', error);
     }
   };
 

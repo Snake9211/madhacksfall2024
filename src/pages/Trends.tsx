@@ -24,7 +24,10 @@ const Trends = () => {
           (doc) => doc.data() as Scam
         );
 
-        setLast7DaysScams(messages7Days);
+        // Sort messages by time in descending order
+        const sortedMessages = messages7Days.sort((a, b) => b.time - a.time);
+
+        setLast7DaysScams(sortedMessages);
       } catch (error) {
         console.error('Error fetching messages:', error);
         setError('Failed to fetch scam messages.');
@@ -36,19 +39,24 @@ const Trends = () => {
 
   return (
     <div className="max-w-screen-lg mx-auto my-1 min-h-screen flex flex-col px-4 py-8 space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold">Scams in the Last 7 Days</h1>
+      <div className="space-y-2">
+        <h1>Scams in the Last 7 Days &#128198;</h1>
         {error ? (
           <p className="text-red-500">{error}</p>
         ) : (
           <div>
             {last7DaysScams.length > 0 ? (
-              <CardCarousel scamList={last7DaysScams} />
+              <div className="flex items-center justify-center">
+                <CardCarousel scamList={last7DaysScams} />
+              </div>
             ) : (
               <p>No scams reported in the last 7 days.</p>
             )}
           </div>
         )}
+      </div>
+      <div>
+        <h1>Trending Scammers&#128293;</h1>
       </div>
     </div>
   );
