@@ -34,6 +34,16 @@ const Submit: React.FC = () => {
       setCommunicationType(communicationType);
       setEmail(email); 
       setPhoneNumber(phone); 
+
+      // Reset form fields
+      setTitle("");
+      setContent("");
+      setCategory("");
+      setCommunicationType(""); 
+      setEmail(""); 
+      setPhoneNumber(""); 
+      setCommunicationType("");
+
     } catch (error) {
       console.error("Error adding document: ", error);
     }
@@ -113,6 +123,8 @@ const Submit: React.FC = () => {
             <span className="text-lg font-semibold">Scammer Contact: {communicationType}</span>
             <input
                 value={communicationType === "Email" ? email : phone}
+                type={communicationType === "Email" ? "email" : "tel"}
+                pattern={communicationType === "Email" ? "" : "[0-9]{3}[0-9]{3}[0-9]{4}"}
                 onChange={(e) => {
                 if (communicationType === "Email") {
                     setEmail(e.target.value);
