@@ -2,7 +2,6 @@ import './App.css';
 
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 
-import { AuroraHero } from './components/AuroraHero';
 import NavBar from './components/NavBar';
 import Resources from './pages/Resources';
 import Search from './pages/Search';
