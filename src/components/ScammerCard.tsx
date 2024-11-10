@@ -1,5 +1,3 @@
-import React from 'react';
-import { Scam } from '../types/Scam';
 import {
   Card,
   CardContent,
@@ -8,7 +6,9 @@ import {
   CardHeader,
   CardTitle,
 } from '../components/ui/card';
+
 import NoAccountsIcon from '@mui/icons-material/NoAccounts';
+import React from 'react';
 
 interface ScammerCardProps {
   scammer: string; // Scammer's email or phone
