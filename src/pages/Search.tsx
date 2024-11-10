@@ -46,12 +46,12 @@ const Search: React.FC = () => {
                 setContactInfo('');
               }}
               label="Method of Contact"
-              style={{ backgroundColor: '#f8f8f8' }}
+              style={{}}
               MenuProps={{
                 PaperProps: {
                   style: {
-                    backgroundColor: '#ffffff', // White background to make it non-transparent
-                    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)', // Adds a soft shadow for better visibility
+                    backgroundColor: '#ffffff',
+                    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
                   },
                 },
               }}
@@ -71,7 +71,7 @@ const Search: React.FC = () => {
             onChange={(e) => setContactInfo(e.target.value)}
             required
             InputProps={{
-              style: { backgroundColor: '#f8f8f8' },
+              style: { },
             }}
           />
 
@@ -86,7 +86,7 @@ const Search: React.FC = () => {
             onChange={(e) => setMessageContent(e.target.value)}
             required
             InputProps={{
-              style: { backgroundColor: '#f8f8f8' },
+              style: { },
             }}
           />
 

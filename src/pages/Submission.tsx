@@ -1,15 +1,16 @@
-// SubmitReportForm.tsx
-import React, { useState } from 'react';
+import { Box, Button, Container, FormControl, InputLabel, MenuItem, Paper, Select, TextField, Typography } from '@mui/material';
+import React, { useState } from "react";
+import { addDoc, collection } from "firebase/firestore";
+
 import { db } from '../firebaseConfig';
-import { collection, addDoc } from 'firebase/firestore';
 
 const Submit: React.FC = () => {
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-  const [category, setCategory] = useState('');
-  const [communicationType, setCommunicationType] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhoneNumber] = useState('');
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [category, setCategory] = useState("");
+  const [communicationType, setCommunicationType] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhoneNumber] = useState("");
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -21,141 +22,142 @@ const Submit: React.FC = () => {
       communicationType,
       email,
       phone,
-      reportID: generateUniqueFirestoreId(), // Simple unique ID
+      reportID: generateUniqueFirestoreId(),
       time: Date.now() / 1000,
     };
 
     try {
-      await addDoc(collection(db, 'Scam Report'), reportData);
-      alert('Report submitted!');
-      setTitle(title);
-      setContent(content);
-      setCategory(category);
-      setCommunicationType(communicationType);
-      setEmail(email);
-      setPhoneNumber(phone);
-
-      // Reset form fields
-      setTitle('');
-      setContent('');
-      setCategory('');
-      setCommunicationType('');
-      setEmail('');
-      setPhoneNumber('');
-      setCommunicationType('');
+      await addDoc(collection(db, "Scam Report"), reportData);
+      alert("Report submitted!");
+      setTitle("");
+      setContent("");
+      setCategory("");
+      setCommunicationType("");
+      setEmail("");
+      setPhoneNumber("");
     } catch (error) {
       console.error('Error adding document: ', error);
     }
   };
 
   function generateUniqueFirestoreId() {
-    // Alphanumeric characters
-    const chars =
-      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     let autoId = '';
     for (let i = 0; i < 20; i++) {
       autoId += chars.charAt(Math.floor(Math.random() * chars.length));
     }
-
     return autoId;
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md"
-      >
-        <h2 className="text-2xl font-bold text-center mb-6 text-red-900">
+    <Container maxWidth="sm" style={{ marginTop: '3rem' }}>
+      <Box textAlign="center" mb={4}>
+        <Typography variant="h3" style={{ fontWeight: 'bold', color: '#c5050c' }}>
           Submit a New Report
-        </h2>
+        </Typography>
+      </Box>
 
-        <label className="block mb-4">
-          <span className="text-lg font-semibold">Title:</span>
-          <input
+      <Paper elevation={3} style={{ padding: '2rem', borderRadius: '12px' }}>
+        <form onSubmit={handleSubmit}>
+          <TextField
             required
-            type="text"
+            label="Title"
+            variant="outlined"
+            fullWidth
+            margin="normal"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="mt-1 block w-full p-3 border border-gray-300 rounded-lg focus:border-red-500 focus:outline-none text-lg"
           />
-        </label>
 
-        <label className="block mb-4">
-          <span className="text-lg font-semibold">Content:</span>
-          <textarea
+          <TextField
             required
+            label="Content"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            multiline
+            rows={4}
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            className="mt-1 block w-full p-3 border border-gray-300 rounded-lg focus:border-red-500 focus:outline-none text-lg"
-            rows={4}
           />
-        </label>
 
-        <label className="block mb-4">
-          <span className="text-lg font-semibold">Category:</span>
-          <select
-            required
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            className="mt-1 block w-full p-3 border border-gray-300 rounded-lg focus:border-red-500 focus:outline-none text-lg"
-          >
-            <option selected hidden value="Other">
-              Choose here
-            </option>
-            <option value="Phishing">Phishing</option>
-            <option value="Job">Job</option>
-            <option value="Housing">Housing</option>
-            <option value="Identity Theft">Identity Theft</option>
-            <option value="Other">Other</option>
-          </select>
-        </label>
+          <FormControl fullWidth variant="outlined" margin="normal">
+            <InputLabel id="category-label">Category</InputLabel>
+            <Select
+              labelId="category-label"
+              id="category"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              label="Category"
+              MenuProps={{
+                PaperProps: {
+                  style: {
+                    backgroundColor: '#ffffff',
+                    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
+                  },
+                },
+              }}
+            >
+              <MenuItem value="Phishing">Phishing</MenuItem>
+              <MenuItem value="Job">Job</MenuItem>
+              <MenuItem value="Housing">Housing</MenuItem>
+              <MenuItem value="Identity Theft">Identity Theft</MenuItem>
+              <MenuItem value="Other">Other</MenuItem>
+            </Select>
+          </FormControl>
 
-        <label className="block mb-4">
-          <span className="text-lg font-semibold">Communication Type:</span>
-          <select
-            value={communicationType}
-            onChange={(e) => setCommunicationType(e.target.value)}
-            className="mt-1 block w-full p-3 border border-gray-300 rounded-lg focus:border-red-500 focus:outline-none text-lg"
-          >
-            <option selected hidden value="Other">
-              Choose here
-            </option>
-            <option value="Email">Email</option>
-            <option value="Phone">Phone Call / Text Message</option>
-          </select>
-        </label>
+          <FormControl fullWidth variant="outlined" margin="normal">
+            <InputLabel id="communicationType-label">Communication Type</InputLabel>
+            <Select
+              labelId="communicationType-label"
+              id="communicationType"
+              value={communicationType}
+              onChange={(e) => setCommunicationType(e.target.value)}
+              label="Communication Type"
+              MenuProps={{
+                PaperProps: {
+                  style: {
+                    backgroundColor: '#ffffff',
+                    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
+                  },
+                },
+              }}
+            >
+              <MenuItem value="Email">Email</MenuItem>
+              <MenuItem value="Phone">Phone Call / Text Message</MenuItem>
+            </Select>
+          </FormControl>
 
-        <label className="block mb-4">
-          <span className="text-lg font-semibold">
-            Scammer Contact: {communicationType}
-          </span>
-          <input
-            value={communicationType === 'Email' ? email : phone}
-            type={communicationType === 'Email' ? 'email' : 'tel'}
-            pattern={
-              communicationType === 'Email' ? '' : '[0-9]{3}[0-9]{3}[0-9]{4}'
-            }
+          <TextField
+            label={`Scammer Contact: ${communicationType}`}
+            type={communicationType === "Email" ? "email" : "tel"}
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={communicationType === "Email" ? email : phone}
             onChange={(e) => {
-              if (communicationType === 'Email') {
-                setEmail(e.target.value);
-              } else if (communicationType === 'Phone') {
-                setPhoneNumber(e.target.value);
-              }
-              //setContent(e.target.value); // Updates content state regardless
+              (communicationType === "Email" ? setEmail : setPhoneNumber)(e.target.value);
             }}
-            className="mt-1 block w-full p-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none text-lg"
           />
-        </label>
 
-        <button
-          type="submit"
-          className="w-full py-3 mt-6 bg-red-600 text-white font-semibold rounded-lg text-lg hover:bg-red-700 focus:outline-none focus:bg-red-700"
-        >
-          Submit Report
-        </button>
-      </form>
-    </div>
+          <Box textAlign="center" mt={4}>
+            <Button
+              type="submit"
+              variant="contained"
+              style={{
+                backgroundColor: '#c5050c',
+                color: '#ffffff',
+                fontWeight: 'bold',
+                padding: '0.75rem 1.5rem',
+              }}
+              size="large"
+            >
+              Submit Report
+            </Button>
+          </Box>
+        </form>
+      </Paper>
+    </Container>
   );
 };
 
