@@ -4,7 +4,7 @@ import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 
 import Submission from './pages/Submission';
 // import Trends from './pages/Trends';
-import NavBar from './components/navBar';
+import NavBar from './components/Navbar';
 import Resources from './pages/Resources';
 import Search from './pages/Search';
 
