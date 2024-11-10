@@ -18,4 +18,8 @@
   li {
     @apply text-lg;
   }
+  :root {
+
+    --radius: 0.5rem
+  }
 }
