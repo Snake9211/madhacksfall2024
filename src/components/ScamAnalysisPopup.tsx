@@ -8,9 +8,10 @@ import {
   Divider,
   Typography,
 } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { addDoc, collection } from "firebase/firestore";
 
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import { db } from '../firebaseConfig';
 
 interface ScamAnalysisPopupProps {
@@ -22,6 +23,9 @@ interface ScamAnalysisPopupProps {
   messageReportsCount: number;
 }
 
+const apiKey = "AIzaSyCtcr1soRKFoMPrxKCXgl-zYHmRgTNai1s";
+const genAI = new GoogleGenerativeAI(apiKey);
+
 const ScamAnalysisPopup: React.FC<ScamAnalysisPopupProps> = ({
   open,
   onClose,
@@ -30,12 +34,36 @@ const ScamAnalysisPopup: React.FC<ScamAnalysisPopupProps> = ({
   contactReportsCount,
   messageReportsCount,
 }) => {
-  // Define state variables for report fields
-  const [email, setEmail] = useState(contactInfo);
-  const [phone, setPhone] = useState(contactInfo);
+  const [aiScamLikelihood, setAiScamLikelihood] = useState<number | null>(null);
   
   // Generate a title from the first 5 words of messageContent
   const generatedTitle = messageContent.split(" ").slice(0, 5).join(" ");
+
+  useEffect(() => {
+    if (open) {
+      runAnalysis();
+    }
+  }, [open]);
+
+  async function runAnalysis() {
+    try {
+      const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+      const prompt = `USE ONLY NUMBERS 0-100 ON HOW LIKELY THE FOLLOWING IS A SCAM: ${messageContent}`;
+
+      const result = await model.generateContent(prompt);
+      const response = await result.response;
+      const text = await response.text();
+      const likelihood = parseFloat(text);
+      
+      if (!isNaN(likelihood)) {
+        setAiScamLikelihood(likelihood);
+      } else {
+        console.error("Invalid AI response:", text);
+      }
+    } catch (error) {
+      console.error("Error running AI analysis:", error);
+    }
+  }
 
   const handleSubmitReport = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -43,8 +71,8 @@ const ScamAnalysisPopup: React.FC<ScamAnalysisPopupProps> = ({
     const reportData = {
       title: generatedTitle,
       content: messageContent,
-      email: email.includes('@') ? email : '',
-      phone: email.includes('@') ? '' : phone, 
+      email: contactInfo.includes('@') ? contactInfo : '',
+      phone: contactInfo.includes('@') ? '' : contactInfo, 
       reportID: generateUniqueFirestoreId(),
       time: Date.now() / 1000,
       contactReportsCount,
@@ -55,9 +83,6 @@ const ScamAnalysisPopup: React.FC<ScamAnalysisPopupProps> = ({
       await addDoc(collection(db, "Scam Report"), reportData);
       alert("Report submitted as scam!");
       onClose(); // Close the dialog after submission
-      
-      setEmail("");
-      setPhone("");
     } catch (error) {
       console.error('Error adding document:', error);
     }
@@ -79,6 +104,9 @@ const ScamAnalysisPopup: React.FC<ScamAnalysisPopupProps> = ({
         <Box mb={2}>
           <Typography variant="h6" color="primary" gutterBottom>
             AI Overview
+          </Typography>
+          <Typography variant="body1">
+            AI Likelihood of Scam: {aiScamLikelihood !== null ? `${aiScamLikelihood}%` : "Loading..."}
           </Typography>
           <Typography variant="body1">
             Our AI has analyzed the provided information and found potential scam indicators. Please review the information below to decide if you would like to submit this report as a scam.
