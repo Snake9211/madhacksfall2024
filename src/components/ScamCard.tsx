@@ -9,18 +9,22 @@ import {
   CardTitle,
 } from '../components/ui/card';
 
-const ScamCard = (prop: Scam) => {
+interface ScamCardProps {
+  scam: Scam; // Define the expected prop as a Scam object
+}
+
+const ScamCard: React.FC<ScamCardProps> = ({ scam }) => {
   return (
     <Card className="w-[350px]">
       <CardHeader>
-        <CardTitle>{prop.title}</CardTitle>
+        <CardTitle>{scam.title}</CardTitle>
         <CardDescription>
-          {prop.communicationType}:{' '}
-          {prop.communicationType === 'Email' ? prop.email : prop.phone}
+          {scam.communicationType}:{' '}
+          {scam.communicationType === 'Email' ? scam.email : scam.phone}
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="grid w-full items-center gap-4">{prop.content}</div>
+        <div className="grid w-full items-center gap-4">{scam.content}</div>
       </CardContent>
       <CardFooter className="flex justify-between"></CardFooter>
     </Card>

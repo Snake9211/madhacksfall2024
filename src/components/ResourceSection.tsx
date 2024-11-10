@@ -110,7 +110,7 @@ const ResourceSection = () => {
           </ul>
           <p>Example: </p>
           <img
-            src="src\assets\images\housingscam.png"
+            src="src\assets\images\Scam-FB-Ad.jpg"
             alt="housing scam example"
             className="w-1/2 p-6"
           />
