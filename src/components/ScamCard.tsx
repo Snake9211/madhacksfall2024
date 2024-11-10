@@ -31,7 +31,7 @@ const ScamCard: React.FC<ScamCardProps> = ({ scam }) => {
     <Card className="w-full h-5/6">
       <CardHeader>
         <CardTitle className="flex justify-between">
-          <div>{scam.title}</div>
+          <div className="text-red-700">{scam.title}</div>
           <div className="text-red-600 font-bold">
             {iconMap[scam.category] || <PhishingIcon />}
           </div>
@@ -41,7 +41,7 @@ const ScamCard: React.FC<ScamCardProps> = ({ scam }) => {
           {scam.communicationType === 'Email' ? scam.email : scam.phone}
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="overflow-y-scroll max-h-[60%]">
         <div className="grid w-full items-center gap-4">{scam.content}</div>
       </CardContent>
       <CardFooter className="flex justify-between"></CardFooter>
