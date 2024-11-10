@@ -2,11 +2,11 @@ import './App.css';
 
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 
-import Submission from './pages/Submission';
 // import Trends from './pages/Trends';
-import NavBar from './components/Navbar';
+import NavBar from './components/NavBar';
 import Resources from './pages/Resources';
 import Search from './pages/Search';
+import Submission from './pages/Submission';
 
 function App() {
   return (
