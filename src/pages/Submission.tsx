@@ -112,7 +112,11 @@ const Submit: React.FC = () => {
               labelId="communicationType-label"
               id="communicationType"
               value={communicationType}
-              onChange={(e) => setCommunicationType(e.target.value)}
+              onChange={(e) => {
+                setCommunicationType(e.target.value);
+                if (e.target.value === "Email") setPhoneNumber("");
+                else setEmail("");
+              }}
               label="Communication Type"
               MenuProps={{
                 PaperProps: {
@@ -128,17 +132,36 @@ const Submit: React.FC = () => {
             </Select>
           </FormControl>
 
-          <TextField
-            label={`Scammer Contact: ${communicationType}`}
-            type={communicationType === "Email" ? "email" : "tel"}
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            value={communicationType === "Email" ? email : phone}
-            onChange={(e) => {
-              (communicationType === "Email" ? setEmail : setPhoneNumber)(e.target.value);
-            }}
-          />
+          {communicationType === "Email" && (
+            <TextField
+              required
+              label="Scammer Contact (Email)"
+              type="email"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          )}
+
+          {communicationType === "Phone" && (
+            <TextField
+              required
+              label="Scammer Contact (Phone)"
+              type="tel"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              value={phone}
+              onChange={(e) => {
+                const value = e.target.value;
+                if (/^\d{0,10}$/.test(value)) {
+                  setPhoneNumber(value);
+                }
+              }}
+            />
+          )}
 
           <Box textAlign="center" mt={4}>
             <Button
