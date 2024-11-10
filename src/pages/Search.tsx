@@ -12,14 +12,24 @@ import {
 } from '@mui/material';
 import React, { useState } from 'react';
 
+import ScamAnalysisPopup from '../components/ScamAnalysisPopup';
+
 const Search: React.FC = () => {
   const [method, setMethod] = useState('email');
   const [contactInfo, setContactInfo] = useState('');
   const [messageContent, setMessageContent] = useState('');
+  const [popupOpen, setPopupOpen] = useState(false);
+
+  const contactReportsCount = 3; // CHANGE THIS
+  const messageReportsCount = 5; // CHANGE THIS
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    // Submit form data
+    setPopupOpen(true); // Open the popup when form is submitted
+  };
+
+  const handleClosePopup = () => {
+    setPopupOpen(false); // Close the popup
   };
 
   return (
@@ -46,7 +56,6 @@ const Search: React.FC = () => {
                 setContactInfo('');
               }}
               label="Method of Contact"
-              style={{}}
               MenuProps={{
                 PaperProps: {
                   style: {
@@ -70,9 +79,6 @@ const Search: React.FC = () => {
             value={contactInfo}
             onChange={(e) => setContactInfo(e.target.value)}
             required
-            InputProps={{
-              style: { },
-            }}
           />
 
           <TextField
@@ -85,9 +91,6 @@ const Search: React.FC = () => {
             value={messageContent}
             onChange={(e) => setMessageContent(e.target.value)}
             required
-            InputProps={{
-              style: { },
-            }}
           />
 
           <Box textAlign="center" mt={4}>
@@ -107,6 +110,14 @@ const Search: React.FC = () => {
           </Box>
         </form>
       </Paper>
+      <ScamAnalysisPopup
+        open={popupOpen}
+        onClose={handleClosePopup}
+        contactInfo={contactInfo}
+        messageContent={messageContent}
+        contactReportsCount={contactReportsCount}
+        messageReportsCount={messageReportsCount}
+      />
     </Container>
   );
 };
