@@ -19,12 +19,11 @@ export default function NavBar() {
     <Disclosure as="nav" style={{ backgroundColor: '#c5050c' }}>
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-16 items-center justify-between">
-          
           <div className="flex-shrink-0">
             <img
-              src="../badger_shield.png" 
+              src="/images/badger_shield.png"
               alt="Logo"
-              className="h-20 w-20" 
+              className="h-20 w-20"
             />
           </div>
 

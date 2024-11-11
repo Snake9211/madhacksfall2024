@@ -37,7 +37,7 @@ const ResourceSection = () => {
           </ul>
           <p>Example: </p>
           <img
-            src="src\assets\images\phishing.png"
+            src="/images/phishing.png"
             alt="paypal scam example"
             className="w-1/2 p-6"
           />
@@ -72,7 +72,7 @@ const ResourceSection = () => {
           </ul>
           <p>Example: </p>
           <img
-            src="src\assets\images\jobscam.png"
+            src="/images/jobscam.png"
             alt="job scam example"
             className="w-1/2 p-6"
           />
@@ -110,7 +110,7 @@ const ResourceSection = () => {
           </ul>
           <p>Example: </p>
           <img
-            src="src\assets\images\Scam-FB-Ad.jpg"
+            src="/images/Scam-FB-Ad.jpg"
             alt="housing scam example"
             className="w-1/2 p-6"
           />

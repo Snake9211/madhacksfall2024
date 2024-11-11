@@ -35,11 +35,19 @@ const Search: React.FC = () => {
   return (
     <Container maxWidth="sm" style={{ marginTop: '3rem' }}>
       <Box textAlign="center" mb={4}>
-        <Typography variant="h3" style={{ fontWeight: 'bold', color: '#c5050c' }}>
-          Welcome to Scam Checker
+        <Typography
+          variant="h3"
+          style={{ fontWeight: 'bold', color: '#c5050c' }}
+        >
+          Is This A Scam?
         </Typography>
-        <Typography variant="subtitle1" style={{ color: '#666' }}>
-          Identify and avoid potential scams by checking messages you’ve received.
+        <Typography
+          className="pt-2"
+          variant="subtitle1"
+          style={{ color: '#666' }}
+        >
+          Identify and avoid potential scams by checking messages you’ve
+          received.
         </Typography>
       </Box>
 
